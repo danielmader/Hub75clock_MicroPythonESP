@@ -1,0 +1,19 @@
+ls :
+         139 boot.py
+        1432 bouncer.py
+        9025 characters.py
+         172 creds.py
+        6318 datetime_util.py
+        7532 hub75.py
+        3273 logo.py
+       13808 main.py
+        7939 main_HUB75_bitbanging.py
+        5404 main_HUB75_flicker_asyncio.py
+        3724 main_HUB75_flicker_thread.py
+        3124 main_Hub75MicroPython.py
+        2859 main_Sensirion_SHT40.py
+        7389 main_asyncio.py
+        5121 main_wlan+syncNTP.py
+        4198 matrixdata.py
+        1263 planets.py
+        3561 wlan_util.py
