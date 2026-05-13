@@ -19,10 +19,10 @@ import ntptime
 import uasyncio as asyncio
 import utime as time
 
-## 3rd party modules
-import hub75
-import matrixdata
-from logo import logo
+## Hub75_MicroPython
+import hub75  # type: ignore
+import matrixdata  # type: ignore
+from logo import logo  # type: ignore
 
 ## Custom modules
 import wlan_util  # => creds.py
@@ -286,18 +286,18 @@ def set_clock(timestamp=None):
     ## 1) :  3
     ## 2) :  3.5
     ## 3) :  0.5
-    ## 4) :  6.5
-    if len(sensor_str) == 11 and temp >= 0:
-        col = 3
-    if len(sensor_str) == 11 and temp < 0:
-        col = 4
-    elif len(sensor_str) == 12:
-        col = 1
-    elif len(sensor_str) == 10:
-        col = 7
-    for img in sensor_display:
-        matrix.set_pixels(22, col, img)
-        col += len(img[0]) + space_small
+    if temp is not None:
+        if len(sensor_str) == 11 and temp >= 0:
+            col = 3
+        if len(sensor_str) == 11 and temp < 0:
+            col = 4
+        elif len(sensor_str) == 12:
+            col = 1
+        elif len(sensor_str) == 10:
+            col = 7
+        for img in sensor_display:
+            matrix.set_pixels(22, col, img)
+            col += len(img[0]) + space_small
 
 
 ##-----------------------------------------------------------------------------

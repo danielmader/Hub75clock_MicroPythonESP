@@ -7,17 +7,13 @@ Main script for bare clock function w/ NTP over Wifi.
 @version: 2023-03-02
 """
 
-## system modules
-from machine import Timer
-
 import ntptime
-
 import uasyncio as asyncio
 import utime as time
+from machine import Timer
 
-## custom modules
-import wlan_helper  # => creds.py
-import datetime_helper
+import datetime_util
+import wlan_util  # => creds.py
 
 ##*****************************************************************************
 ##*****************************************************************************
@@ -48,7 +44,7 @@ def sync_time_NTP():
     try:
         print('\n>> syncing with NTP ...')
         ## check connection status, and (re-)connect if required
-        wlan_helper.connect()
+        wlan_util.connect()
 
         ## get time
         # print('<< NTP timestamp:', ntptime.time())
@@ -77,7 +73,7 @@ async def _scheduled_sync(lock):
                 if sync_time_NTP():
                     ts_clocktick = time.time()
                     ts_ntpsync = ts_clocktick
-                    print(datetime_helper.cettime(ts_clocktick))
+                    print(datetime_util.cettime(ts_clocktick))
                     break
             lock.release()
 
@@ -93,7 +89,7 @@ async def _refresh_display(lock):
         await lock.acquire()
         print("\t\t\trefresh...")
         lock.release()
-        await asyncio.sleep_ms(100)
+        await asyncio.sleep_ms(100)  # type: ignore[attr-defined]
 
 
 ##-----------------------------------------------------------------------------
@@ -104,7 +100,7 @@ async def _set_clock(lock):
     while True:
         ##---------------------------------------------------------------------
         ## assemble time and sensor strings
-        localtime = datetime_helper.cettime(ts_clocktick)
+        localtime = datetime_util.cettime(ts_clocktick)
         # if len(localtime) == 8:
         #     ## MicroPython
         #     year, month, mday, hour, minute, second, weekday, yearday = localtime
@@ -141,7 +137,7 @@ def _clocktick(timer):
 async def main():
     ##-------------------------------------------------------------------------
     ## init WiFi
-    wlan_helper.init()
+    wlan_util.init()
 
     ##-------------------------------------------------------------------------
     ## init timer

@@ -8,6 +8,8 @@ https://forum.micropython.org/viewtopic.php?t=2951
 
 @author: mada
 @version: 2023-02-28
+
+## TODO: rewrite as class with methods for init, connect, disconnect, isconnected, etc.
 """
 
 ## system modules

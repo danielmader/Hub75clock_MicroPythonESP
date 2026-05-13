@@ -1,0 +1,19 @@
+{
+    "venvPath": ".",
+    "venv": ".venv",
+    "pythonVersion": "3.11",
+    "pythonPlatform": "Linux",
+    "typeCheckingMode": "basic",
+    "reportMissingModuleSource": "none",
+    // "reportMissingImports": false,
+    "reportGeneralTypeIssues": false,
+    "stubPath": ".venv/lib/python3.11/site-packages",
+    "typeshedPath": ".venv/lib/python3.11/site-packages/micropython_esp32_stubs",
+    "extraPaths": [
+        "src",
+        "src/lib",
+        "../Hub75_MicroPython"
+    ],
+    "include": ["src"],
+    "exclude": ["**/node_modules", "**/__pycache__", "**/.*", "build", "dist", "**/*.egg-info"]
+}

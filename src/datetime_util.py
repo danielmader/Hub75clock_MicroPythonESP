@@ -176,8 +176,8 @@ if __name__ == '__main__':
     print(ts)
     print("> convert timestamp to a string")
     try:
-        print(time.strftime("%H:%M:%S %a, %d %b %Y (UTC)", time.gmtime(ts)))
-        print(time.strftime("%H:%M:%S %a, %d %b %Y (local time)", time.localtime(ts)))
+        print(time.strftime("%H:%M:%S %a, %d %b %Y (UTC)", time.gmtime(ts)))  # type: ignore[attr-defined]
+        print(time.strftime("%H:%M:%S %a, %d %b %Y (local time)", time.localtime(ts)))  # type: ignore[attr-defined]
     except AttributeError:
         print(localtime_toString(localtime))
 

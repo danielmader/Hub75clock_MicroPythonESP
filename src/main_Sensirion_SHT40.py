@@ -7,13 +7,12 @@ Main script to demo I2C readout of Sensirion SHT40 w/ NodeMCU ESP8266.
 @version: 2023-02-20
 """
 
-## system modules
-import time
-from machine import I2C
-# from machine import SoftI2C
-from machine import Pin
-import uos
 import sys
+import time
+import uos
+
+from machine import I2C
+from machine import Pin
 
 ##*****************************************************************************
 ##*****************************************************************************

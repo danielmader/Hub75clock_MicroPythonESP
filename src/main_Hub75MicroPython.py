@@ -4,11 +4,12 @@ Main script to demo the HUB75 library.
 Uses a custom pinout.
 """
 
-import hub75
-import matrixdata
-from logo import logo
-from planets import earth, saturn
-import bouncer
+## Hub75_MicroPython
+import bouncer  # type: ignore
+import hub75  # type: ignore
+import matrixdata  # type: ignore
+from logo import logo  # type: ignore
+from planets import earth, saturn  # type: ignore
 
 ROW_SIZE = 32
 COL_SIZE = 64
