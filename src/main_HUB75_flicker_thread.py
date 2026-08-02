@@ -9,12 +9,12 @@ Main script to demo HUB75 refresh rate.
 
 import _thread
 import time
-from machine import Timer
 
 ## Hub75_MicroPython
-import hub75  # type: ignore
-import matrixdata  # type: ignore
-from logo import logo  # type: ignore
+import hub75
+import matrixdata
+from logo import logo
+from machine import Timer
 
 ##*****************************************************************************
 ##*****************************************************************************

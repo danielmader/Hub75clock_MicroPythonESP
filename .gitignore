@@ -1,7 +1,10 @@
 ## VSCode
-*.code-workspace
+# *.code-workspace
 
 *.directory
+
+## Generiertes MicroPython-Typeshed für ty (siehe scripts/update-typeshed.sh)
+.typeshed/
 # *Verknüpfung.lnk
 
 ## Large files / non-copyright-free data

@@ -21,8 +21,10 @@ from creds import creds_dict  # credentials of trusted APs
 ##*****************************************************************************
 ##*****************************************************************************
 
-ap = None
-wlan = None
+## Die WLAN-Objekte sind Singletons; der Konstruktor aktiviert nichts,
+## sondern liefert nur die Interface-Referenz (=> kein None-Handling nötig).
+ap = network.WLAN(network.AP_IF)
+wlan = network.WLAN(network.STA_IF)
 
 
 ##=============================================================================
@@ -30,24 +32,18 @@ def init():
     '''
     Setup and configuration of wifi interface.
     '''
-    global ap
-    global wlan
-
     ## configure access-point interface
     # print('>> setting up AP interface ...')
-    # ap = network.WLAN(network.AP_IF)
     # ap.active(True)
     # ap.config(essid='myESP-AP')
     # ap.config(authmode=network.AUTH_WPA_WPA2_PSK, password="µPyESP-AP")
 
     ## disable access-point interface
     print('>> disabling AP interface ...')
-    ap = network.WLAN(network.AP_IF)
     ap.active(False)
 
     ## configure station interface
     print('>> setting up station interface ...')
-    wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
     try:
         wlan.config(reconnects=5)  # ESP32 only

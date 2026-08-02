@@ -8,11 +8,10 @@
     // "reportMissingImports": false,
     "reportGeneralTypeIssues": false,
     "stubPath": ".venv/lib/python3.11/site-packages",
-    "typeshedPath": ".venv/lib/python3.11/site-packages/micropython_esp32_stubs",
+    "typeshedPath": ".venv/lib/python3.11/site-packages",
     "extraPaths": [
         "src",
-        "src/lib",
-        "../Hub75_MicroPython"
+        "../Hub75_MicroPython/src"
     ],
     "include": ["src"],
     "exclude": ["**/node_modules", "**/__pycache__", "**/.*", "build", "dist", "**/*.egg-info"]

@@ -32,3 +32,85 @@ The sensor (7.95€) came on a convenient break-out board from Adafruit:
 This project requires [Ben Emmett's Hub75MicroPython](https://github.com/benjohnemmett/Hub75MicroPython) library, which is perfectly suitable for a simple MicroPython-only application. Ben was very helpful to optimize his library to maximum performance and provided numerous tips and tricks on how to implement it.
 
 There is still a noticable flicker when the screen objects are changed (and also sporadically when the board is busy), but it is certainly acceptable for an update of the clockface every minute.
+
+The library is expected as a sibling checkout of this repository (the type
+checkers resolve `hub75`, `matrixdata` etc. from there):
+
+    Making/
+    ├── Hub75_MicroPython/          # library checkout (src/hub75.py, ...)
+    └── Hub75clock_MicroPythonESP/  # this project
+
+For deployment, copy the library modules from `../Hub75_MicroPython/src/`
+alongside the project scripts onto the board (see `filelist_ESP-WROOM-32`).
+
+# Development: linting & type checking
+
+## venv setup
+
+The configuration files (`pyrightconfig.json`, `scripts/update-typeshed.sh`)
+expect the venv at `.venv` with **Python 3.11**. Set it up with either pip or uv:
+
+    ## Option A: pip/venv
+    python3.11 -m venv .venv
+    .venv/bin/pip install -r requirements.txt
+
+    ## Option B: uv
+    uv venv --python 3.11 .venv
+    uv pip install -r requirements.txt
+
+    ## Both cases: generate the combined typeshed for ty
+    ./scripts/update-typeshed.sh
+
+`requirements.txt` contains everything needed:
+
+* `micropython-esp32-stubs` — type stubs for `machine`, `network`,
+  `time.ticks_ms()` etc. (pulls in `micropython-stdlib-stubs` automatically)
+* `basedpyright` — type checker, same engine as Pylance
+* `ty` — type checker by Astral (makers of ruff/uv)
+* `ruff` — linter (import sorting, code style, complexity)
+* `mpremote` — deployment/REPL tool for MicroPython boards
+
+## Running the checkers
+
+    .venv/bin/basedpyright src    ## config: pyrightconfig.json
+    .venv/bin/ty check            ## config: pyproject.toml [tool.ty]
+    .venv/bin/ruff check src      ## config: pyproject.toml [tool.ruff]
+
+All three must pass without errors.
+
+## How stub resolution works (important for troubleshooting)
+
+The MicroPython stubs are installed **flat** into site-packages (`time.pyi`,
+`machine.pyi`, ...); `micropython-stdlib-stubs` additionally provides a partial
+`stdlib/` directory (e.g. `asyncio` with `sleep_ms`). The checkers find them
+differently:
+
+* **basedpyright/Pylance:** via `stubPath` **and** `typeshedPath` in
+  `pyrightconfig.json` — both point to `.venv/lib/python3.11/site-packages`.
+  Adjust these paths when changing the Python version!
+* **ty:** has no `stubPath` concept, only a complete replacement typeshed
+  (`[tool.ty.environment].typeshed = ".typeshed"` in `pyproject.toml`).
+  `scripts/update-typeshed.sh` assembles that directory from the installed
+  stubs (stdlib stubs + the top-level stdlib modules missing there, such as
+  `time` and `_thread`). **Re-run after every stub update:**
+
+      .venv/bin/pip install -U micropython-esp32-stubs
+      ./scripts/update-typeshed.sh
+
+Known pitfalls (ty 0.0.65): the generated typeshed must not be named
+`typings/` (ty's implicit stub directory — causes a crash), `src` must not be
+listed in `extra-paths` (it is already the first-party root), and ty does not
+understand mypy error codes — lines needing suppression for both checkers
+carry `# type: ignore[...]` (Pylance) plus `# ty: ignore[...]` (ty).
+
+## VSCode
+
+Recommended extensions: **Pylance** (or basedpyright) and **ty**. To make the
+extensions use the venv-installed checkers, add to the workspace settings
+(`*.code-workspace` is gitignored, recreate if needed):
+
+    "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "ty.importStrategy": "fromEnvironment",
+        "basedpyright.importStrategy": "fromEnvironment"
+    }

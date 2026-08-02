@@ -11,12 +11,12 @@ https://glyph.twistedmatrix.com/2014/02/unyielding.html
 """
 
 try:
-    import utime as time
     import uasyncio as asyncio
+    import utime as time
     embedded = True
 except ModuleNotFoundError:
-    import time
     import asyncio
+    import time
     embedded = False
     # import nest_asyncio
     # nest_asyncio.apply()

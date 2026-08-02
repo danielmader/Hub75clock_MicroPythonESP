@@ -9,6 +9,7 @@ Minimum example for basic control of a HUB75 LED matrix (WaveShare 64x32) w/ Nod
 
 ## system modules
 import time
+
 #from machine import I2C
 from machine import Pin
 

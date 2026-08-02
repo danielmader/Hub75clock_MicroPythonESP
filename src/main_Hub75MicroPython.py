@@ -5,11 +5,11 @@ Uses a custom pinout.
 """
 
 ## Hub75_MicroPython
-import bouncer  # type: ignore
-import hub75  # type: ignore
-import matrixdata  # type: ignore
-from logo import logo  # type: ignore
-from planets import earth, saturn  # type: ignore
+import bouncer
+import hub75
+import matrixdata
+from logo import logo
+from planets import earth, saturn
 
 ROW_SIZE = 32
 COL_SIZE = 64

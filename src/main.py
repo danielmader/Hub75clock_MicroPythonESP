@@ -10,24 +10,20 @@ MatrixClock - an ESP32 driven HUB75 LED matrix clock.
 """
 
 ## System modules
-from machine import Timer
-from machine import Pin
-from machine import I2C
-
+## Hub75_MicroPython
+import hub75
+import matrixdata
 import ntptime
-
 import uasyncio as asyncio
 import utime as time
+from logo import logo
+from machine import I2C, Pin, Timer
 
-## Hub75_MicroPython
-import hub75  # type: ignore
-import matrixdata  # type: ignore
-from logo import logo  # type: ignore
+import characters
+import datetime_util
 
 ## Custom modules
 import wlan_util  # => creds.py
-import datetime_util
-import characters
 
 ##*****************************************************************************
 ##*****************************************************************************
@@ -187,7 +183,7 @@ def read_sensor():
 
 
 ##=============================================================================
-def set_clock(timestamp=None):
+def set_clock(timestamp=None):  # noqa: C901
     '''
     Update the display readings.
     '''

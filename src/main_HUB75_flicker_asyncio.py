@@ -7,12 +7,11 @@ Main script to demo HUB75 refresh rate with asyncio threading.
 @version: 2023-03-06
 """
 
+## Hub75_MicroPython
+import hub75
+import matrixdata
 import uasyncio as asyncio
 import utime as time
-
-## Hub75_MicroPython
-import hub75  # type: ignore
-import matrixdata  # type: ignore
 
 ##*****************************************************************************
 ##*****************************************************************************

@@ -1,0 +1,33 @@
+
+## --- ty (Typechecker, CLI & VSCode-Extension) --------------------------------
+## Das kombinierte MicroPython-Typeshed (.typeshed/) wird von
+## scripts/update-typeshed.sh erzeugt (nach Stub-Updates erneut ausführen).
+[tool.ty.src]
+include = ["src"]
+
+[tool.ty.environment]
+python = "./.venv"
+python-version = "3.11"
+typeshed = ".typeshed"
+extra-paths = ["../Hub75_MicroPython/src"]
+
+[tool.ruff]
+line-length = 160
+indent-width = 4
+target-version = "py310"
+exclude = [
+    "__init__.py",
+    ".git",
+    ".venv",
+    "__pycache__",
+    "build",
+    "dist",
+    "*.ipynb",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "C90"]
+ignore = ["E201", "E202", "E203", "E221", "E222", "E241", "E265", "E266"]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10

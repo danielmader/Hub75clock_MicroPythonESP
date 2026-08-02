@@ -176,8 +176,9 @@ if __name__ == '__main__':
     print(ts)
     print("> convert timestamp to a string")
     try:
-        print(time.strftime("%H:%M:%S %a, %d %b %Y (UTC)", time.gmtime(ts)))  # type: ignore[attr-defined]
-        print(time.strftime("%H:%M:%S %a, %d %b %Y (local time)", time.localtime(ts)))  # type: ignore[attr-defined]
+        ## strftime existiert nur in CPython, nicht in MicroPython (=> except AttributeError)
+        print(time.strftime("%H:%M:%S %a, %d %b %Y (UTC)", time.gmtime(ts)))  # type: ignore[attr-defined]  # ty: ignore[unresolved-attribute]
+        print(time.strftime("%H:%M:%S %a, %d %b %Y (local time)", time.localtime(ts)))  # type: ignore[attr-defined]  # ty: ignore[unresolved-attribute]
     except AttributeError:
         print(localtime_toString(localtime))
 

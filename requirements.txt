@@ -1,0 +1,5 @@
+micropython-esp32-stubs
+basedpyright
+ty
+ruff
+mpremote
